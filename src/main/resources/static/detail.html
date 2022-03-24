@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>게시판</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel='stylesheet' href='/webjars/bootstrap/4.5.0/css/bootstrap.min.css'>
+
+    <script>
+        $(document).ready(function () {
+            let getLink = window.location.search;
+            let id = decodeURI(getLink.split('?')[1])
+            // HTML 문서를 로드할 때마다 실행합니다.
+            getBoards(id);
+        })
+
+        // 게시글을 불러와서 보여줍니다.
+        function getBoards(id) {
+            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            $.ajax({
+                type: 'GET',
+                url: `/api/boards/${id}`,
+                success: function (response) {
+                    let detail = response;
+                    let id = detail.id;
+                    let title = detail.title;
+                    let username = detail.username;
+                    let contents = detail.contents;
+                    let modifiedAt = detail.modifiedAt.substring(0, 16);
+                    addHTML(id, title, username, contents, modifiedAt);
+                }
+            })
+        }
+
+        // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
+        function addHTML(id, title, username, contents, modifiedAt) {
+            // 1. HTML 태그를 만듭니다.
+            let tempHtml = `<div class="card border-success mb-3" style="max-width: 18rem;">
+                                <div class="card-header bg-transparent border-success">${username}</div>
+                                <div class="card-body text-success">
+                                    <h5 class="card-title">${title}</h5>
+                                    <p class="card-text">${contents}</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-success">${modifiedAt}</div>
+                            </div>`;
+            // 2. #cards-box 에 HTML을 붙인다.
+            $('#content').append(tempHtml);
+        }
+
+    </script>
+</head>
+
+<body>
+<h1 >누구냐</h1>
+<div id="content">
+
+</div>
+<!--    <div id="footer">-->
+<!--        <button class="button" type="button" onclick="location.href='index.html'">-->
+<!--            처음으로-->
+<!--        </button>-->
+<!--    </div>-->
+<!--<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
+</body>
+
+</html>

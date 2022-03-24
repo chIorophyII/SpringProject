@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0: url=https://home">
+
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>게시판</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='/webjars/bootstrap/4.5.0/css/bootstrap.min.css'>
+
+    <script>
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때마다 실행합니다.
+            getBoards();
+        })
+
+        // 게시글을 불러와서 보여줍니다.
+        function getBoards() {
+            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            $.ajax({
+                type: 'GET',
+                url: '/api/boards',
+                success: function (response) {
+                    for (let i=0; i < response.length; i++) {
+                        let board = response[i];
+                        let id = board.id;
+                        let title = board.title;
+                        let username = board.username;
+                        let modifiedAt = board.modifiedAt.substring(0,10);
+                        addHTML(id, title, username, modifiedAt);
+                    }
+                }
+            })
+        }
+
+        // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
+        function addHTML(id, title, username, modifiedAt) {
+            // 1. HTML 태그를 만듭니다.
+            let tempHtml = `<tr onclick="location.href='detail.html?${id}'">
+                                <th scope="row">${id}</th>
+                                <td>${username}</td>
+                                <td>${title}</td>
+                                <td>${modifiedAt}</td>
+                            </tr>`;
+            // 2. #cards-box 에 HTML을 붙인다.
+            $('#content').append(tempHtml);
+        }
+
+        function go_write() {
+            location.href=`post.html`;
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <button onclick="go_write()">글쓰기</button>
+<!--    <div id="cards-box">-->
+<!--    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;" onclick="location.href='/detail.html?${id}'">-->
+<!--        <div class="card-header">${username}</div>-->
+<!--        <div class="card-body">-->
+<!--            <h5 class="card-title">${title}</h5>-->
+<!--            <p class="card-text">${modifiedAt}</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">작성자</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성 날짜</th>
+        </tr>
+        </thead>
+        <tbody id="content">
+
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>
