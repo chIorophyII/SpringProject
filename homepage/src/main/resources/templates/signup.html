@@ -45,15 +45,19 @@
   <div id="login-form">
     <div id="login-title">Sign up Select Shop</div>
 
-    <form action="/user/signup" method="post">
-      <div class="login-id-label">Username</div>
+    <form action="/user/signup" method="post" modelAttribute="userDto">
+      <div class="login-id-label">ID</div>
       <input type="text" name="username" placeholder="Username" class="login-input-box">
+      <hr>
+      <span th:style="${'color: red; font-size:11px;'}" th:text="${valid_username}"></span>
 
       <div class="login-id-label">Password</div>
       <input type="password" name="password" placeholder="비밀번호" class="login-input-box">
+      <hr>
+      <span th:style="${'color: red; font-size:11px;'}" th:text="${valid_password}"></span>
 <!--      비밀번호 확인-->
-      <div class="login-id-label">Password Check</div>
-      <input type="password" name="password2" placeholder="비밀번호 확인" class="login-input-box">
+<!--      <div class="login-id-label">Password Check</div>-->
+<!--      <input type="password" name="password2" placeholder="비밀번호 확인" class="login-input-box">-->
 
 <!--      <div class="login-id-label">E-mail</div>-->
 <!--      <input type="text" name="email" placeholder="E-mail" class="login-input-box">-->

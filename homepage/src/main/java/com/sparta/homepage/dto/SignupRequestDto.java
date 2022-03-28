@@ -13,8 +13,10 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class SignupRequestDto {
+    private Long id;
+
     @NotBlank(message = "아이디는 필수 입력값입니다.")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z]).{3,16}", message = "아이디는 최소 3자 이상, 영문 대소문자, 숫자를 사용하세요.")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{3,16}", message = "아이디는 최소 3자 이상, 영문 대소문자, 숫자를 사용하세요.")
     private String username;
 
     @NotBlank(message = "비밀번호는 필수 입력값입니다.")

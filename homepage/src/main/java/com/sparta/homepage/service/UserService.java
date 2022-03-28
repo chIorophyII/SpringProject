@@ -2,25 +2,33 @@ package com.sparta.homepage.service;
 
 import com.sparta.homepage.dto.SignupRequestDto;
 import com.sparta.homepage.models.User;
-//import com.sparta.homepage.models.UserRoleEnum;
 import com.sparta.homepage.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-//    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    @Autowired
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public Map<String, String> validationHandling(Errors errors) {
+        Map<String, String> validationResult = new HashMap<>();
+
+        for (FieldError error: errors.getFieldErrors()) {
+            String validkeyName = String.format("valid_%s", error.getField());
+            validationResult.put(validkeyName, error.getDefaultMessage());
+        }
+        return validationResult;
     }
+    // bindingresult
 
     public void registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
