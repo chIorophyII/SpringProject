@@ -27,11 +27,11 @@ public class HomepageApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
     }
 
-    @Bean
-    public CommandLineRunner demo(BoardRepository repository) {
-        return (args) -> {
-            repository.save(new Board("항해99", "선원1", "어푸어푸"));
-        };
-    }
+//    @Bean
+//    public CommandLineRunner demo(BoardRepository repository) {
+//        return (args) -> {
+//            repository.save(new Board("항해99", "선원1", "어푸어푸"));
+//        };
+//    }
 
 }

@@ -2,7 +2,7 @@ package com.sparta.homepage.service;
 
 import com.sparta.homepage.dto.SignupRequestDto;
 import com.sparta.homepage.models.User;
-import com.sparta.homepage.models.UserRoleEnum;
+//import com.sparta.homepage.models.UserRoleEnum;
 import com.sparta.homepage.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+//    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Autowired
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
@@ -32,18 +32,18 @@ public class UserService {
 
         // 패스워드 암호화
         String password = passwordEncoder.encode(requestDto.getPassword());
-        String email = requestDto.getEmail();
+//        String email = requestDto.getEmail();
 
         // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.USER;
-        if (requestDto.isAdmin()) {
-            if (!requestDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
-            }
-            role = UserRoleEnum.ADMIN;
-        }
+//        UserRoleEnum role = UserRoleEnum.USER;
+//        if (requestDto.isAdmin()) {
+//            if (!requestDto.getAdminToken().equals(ADMIN_TOKEN)) {
+//                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+//            }
+//            role = UserRoleEnum.ADMIN;
+//        }
 
-        User user = new User(username, password, email, role);
+        User user = new User(username, password);
         userRepository.save(user);
     }
 }

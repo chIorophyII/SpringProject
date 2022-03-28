@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class User {
 
     // ID가 자동으로 생성 및 증가합니다.
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
@@ -25,17 +25,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING) // string으로 변환해서 저장
-    private UserRoleEnum role; // user거나 admin이거나 하나로 결정
-
-    public User(String username, String password, String email, UserRoleEnum role) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.email = email;
-        this.role = role;
     }
 }

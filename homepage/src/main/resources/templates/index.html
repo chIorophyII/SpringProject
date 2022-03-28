@@ -26,27 +26,27 @@
                     for (let i = 0; i < response.length; i++) {
                         let post = response[i];
                         let id = post.id;
-                        let name = post.name;
+                        let username = post.username;
                         let title = post.title;
                         let contents = post.contents;
                         let modifiedAt = post.modifiedAt;
-                        addHTML(id, name, title, contents, modifiedAt);
+                        addHTML(id, username, title, contents, modifiedAt);
                     }
                 }
             });
         }
 
-        function addHTML(id, name, title, contents, modifiedAt) {
-            let tempHtml = makeMessage(id, name, title, contents, modifiedAt);
+        function addHTML(id, username, title, contents, modifiedAt) {
+            let tempHtml = makeMessage(id, username, title, contents, modifiedAt);
             $('#cards-box').append(tempHtml);
         }
 
-        function makeMessage(id, name, title, contents, modifiedAt) {
+        function makeMessage(id, username, title, contents, modifiedAt) {
             return `<a href="detail.html?id=id">
                         <div class="card">
                             <div class="metadata">
                                <div ${id}="${id}-name" class="name">
-                                   ${name}
+                                   ${username}
                                </div>
                                <div class="date">
                                    ${modifiedAt}
@@ -59,6 +59,22 @@
                             </a>
                         </div>`;
         }
+
+        // function signup() {
+        //   // // Get the checkbox
+        //   // var checkBox = document.getElementById("admin-check");
+        //   // // Get the output text
+        //   // var box = document.getElementById("admin-token");
+        //
+        //   // If the checkbox is checked, display the output text
+        //   // if (checkBox.checked == true){
+        //   //   box.style.display = "block";
+        //   // } else {
+        //   //   box.style.display = "none";
+        //   // }
+        //   if
+        //     location.window.href="/user/login"
+        // }
 
     </script>
 
@@ -89,7 +105,7 @@
             font-size: 20px;
             position: relative;
             margin-left: 450px;
-            margin-top: 100px;
+            margin-top: 50px;
             margin-bottom: 50px;
             border-radius: 20px;
         }
@@ -229,7 +245,7 @@
 
 </div>
 <div class="wrap">
-    <a href="/user/login" id="login">로그인/회원가입</a>
+    <a id="login" href="/user/login">로그인/회원가입</a>
     <div class="header">
         <h2>대나무 바다에서<br><br>
             맘껏 외치세요 <span th:text="${username}"></span>
@@ -239,26 +255,26 @@
         <button type="button" class="btn btn-primary" onclick="location.href='write.html'"><b>글 쓰 기</b></button>
     </div>
     <div id="cards-box" class="area-read">
-        <div class="card">
-            <div class="metadata">
-                <div class="date">
-                    October 10, 2020
-                </div>
-                <div class="name">
-                    anonymous
-                </div>
-            </div>
-            <h2>asd</h2>
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-<!--                    <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>-->
-                </div>
-            </div>
+<!--        <div class="card">-->
+<!--            <div class="metadata">-->
+<!--                <div class="date">-->
+<!--                    October 10, 2020-->
+<!--                </div>-->
+<!--                <div class="name">-->
+<!--                    anonymous-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <h2>asd</h2>-->
+<!--            <div class="contents">-->
+<!--                <div id="1-contents" class="text">-->
+<!--                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew-->
+<!--                </div>-->
+<!--                <div id="1-editarea" class="edit">-->
+<!--                    <textarea id="1-textarea" class="te-edit" name="" cols="30" rows="5"></textarea>-->
+<!--                </div>-->
+<!--            </div>-->
 
-        </div>
+<!--        </div>-->
     </div>
 </div>
 </body>

@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class HomepageRequestDto {
     private String title;
-    private String name;
+    private String username;
     private String contents;
 }
