@@ -35,7 +35,11 @@ public class UserService {
         // 회원 ID 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
         if (found.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
+            throw new IllegalArgumentException("중복된 ID가 존재합니다.");
+        }
+        // 비밀번호 일치 확인
+        if(!requestDto.getPassword().equals(requestDto.getCheckpw())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
         // 패스워드 암호화

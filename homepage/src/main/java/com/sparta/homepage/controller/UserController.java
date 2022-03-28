@@ -3,7 +3,6 @@ package com.sparta.homepage.controller;
 import com.sparta.homepage.dto.SignupRequestDto;
 import com.sparta.homepage.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +55,15 @@ public class UserController {
             return "signup";
         }
 
-        userService.registerUser(userDto);
+        // 중복 검사 후 메세지
+        try {
+            userService.registerUser(userDto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "signup";
+        }
+
+//        userService.registerUser(userDto);
         return "login";
     }
 }

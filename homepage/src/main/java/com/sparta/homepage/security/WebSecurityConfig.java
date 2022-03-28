@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // 패스워드 이코딩
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
@@ -40,8 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 회원 관리 처리 API 전부를 login 없이 허용
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/**").permitAll()
-                // 그 외 어떤 요청이든 '인증'
-                .anyRequest().authenticated()
+                .antMatchers("/api/homepage/{id}").permitAll()
+                // 그 외 어떤 요청이든 '인증'과정 필요
+                .anyRequest().authenticated() // 어떤 요청이 오든지 로그인을 안했으면 로그인을 시키겠다
                 .and()
 
                 // [로그인 기능]
