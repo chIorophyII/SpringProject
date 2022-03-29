@@ -7,11 +7,16 @@ import com.sparta.homepage.dto.KakaoUserInfoDto;
 import com.sparta.homepage.dto.SignupRequestDto;
 import com.sparta.homepage.models.User;
 import com.sparta.homepage.repository.UserRepository;
+import com.sparta.homepage.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -23,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -75,7 +81,34 @@ public class UserService {
         String accessToken = getAccessToken(code);
 
         // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
+        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
+
+        // DB 에 중복된 Kakao Id 가 있는지 확인
+        Long kakaoId = kakaoUserInfo.getId();
+        User kakaoUser = userRepository.findByKakaoId(kakaoId)
+                .orElse(null);
+        if (kakaoUser == null) {
+        // 회원가입
+            // username: kakao nickname
+            String nickname = kakaoUserInfo.getNickname();
+
+            // password: random UUID
+            String password = UUID.randomUUID().toString();
+            String encodedPassword = passwordEncoder.encode(password);
+
+            // email: kakao email
+            String email = kakaoUserInfo.getEmail();
+            // role: 일반 사용자
+//            UserRoleEnum role = UserRoleEnum.USER;
+
+            kakaoUser = new User(nickname, email, encodedPassword, kakaoId);
+            userRepository.save(kakaoUser);
+        }
+
+        // 4. 강제 로그인 처리
+        UserDetails userDetails = new UserDetailsImpl(kakaoUser);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String getAccessToken(String code) throws JsonProcessingException {
