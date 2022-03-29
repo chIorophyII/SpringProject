@@ -13,16 +13,18 @@
 
     <script>
         $(document).ready(function () {
-            getMessages();
+            let getLink = window.location.search;
+            let id = decodeURI(getLink.split('id=')[1])
+            getMessages(id);
         })
 
         // 게시글을 불러옵니다.
-        function getMessages() {
+        function getMessages(id) {
             $('#cards-box').empty();
-            let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+            // let idx = location.href.split("?")[1]; //localhost/detail.html?id=12
             $.ajax({
                 type: "GET",
-                url: `/api/homepage/${idx}`,
+                url: `/api/homepage/${id}`,
                 data: {},
                 success: function (response) {
                     let post = response;
@@ -227,10 +229,11 @@
 
 </div>
 <div class="wrap">
-    <a href="/" id="home">Home</a>
     <div class="header">
+        <a href="/" id="home">Home</a>
         <h2>대나무 바다에서<br><br>
-            맘껏 외치세요</h2>
+            맘껏 외치세요
+        </h2>
     </div>
 
     <div id="cards-box" class="area-read">
@@ -254,6 +257,8 @@
                       <textarea id="1-textarea" class="te-edit" name="" cols="30" rows="5"></textarea>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>

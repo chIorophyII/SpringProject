@@ -1,7 +1,7 @@
 package com.sparta.homepage.models;
 
 
-import com.sparta.homepage.dto.HomepageRequestDto;
+import com.sparta.homepage.dto.BoardRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,14 +36,14 @@ public class Board extends Timestamped {
     }
 
     // 게시글 생성
-    public Board(HomepageRequestDto requestDto) {
+    public Board(BoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
 
     // 게시글 수정
-    public void update(HomepageRequestDto requestDto) {
+    public void update(BoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();

@@ -1,6 +1,6 @@
 package com.sparta.homepage.service;
 
-import com.sparta.homepage.dto.HomepageRequestDto;
+import com.sparta.homepage.dto.BoardRequestDto;
 import com.sparta.homepage.models.Board;
 import com.sparta.homepage.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class BoardService {
 
 
     @Transactional
-    public Long update(Long id, HomepageRequestDto requestDto) {
+    public Long update(Long id, BoardRequestDto requestDto) {
         Board homepage = homepageRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
