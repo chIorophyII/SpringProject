@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -235,6 +236,13 @@
             /*position: top;*/
             /*padding-bottom: 10px;*/
         }
+        #logout {
+            text-decoration: none;
+            color: #FFA547;
+            display: inline;
+            text-align: right;
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -245,14 +253,15 @@
 
 </div>
 <div class="wrap">
-    <a id="login" href="/user/login">로그인/회원가입</a>
+    <a sec:authorize="!isAuthenticated()" id="login" href="/user/login">로그인/회원가입</a>
+    <a sec:authorize="isAuthenticated()" id="logout" href="/user/logout">로그아웃</a>
     <div class="header">
         <h2>대나무 바다에서<br><br>
             맘껏 외치세요 <span th:text="${username}"></span>
         </h2>
     </div>
     <div class="to-write">
-        <button type="button" class="btn btn-primary" onclick="location.href='write.html'"><b>글 쓰 기</b></button>
+        <button sec:authorize="isAuthenticated()" type="button" class="btn btn-primary" onclick="location.href='write.html'"><b>글 쓰 기</b></button>
     </div>
     <div id="cards-box" class="area-read">
 <!--        <div class="card">-->

@@ -23,6 +23,8 @@ public class SignupRequestDto {
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{4,16}", message = "비밀번호는 최소 4자 이상, 영문 대소문자, 숫자를 사용하세요.")
     private String password;
 
+    private String email;
+
     @NotBlank(message = "비밀번호를 한 번 더 입력해주세요")
     private String checkpw;
 
