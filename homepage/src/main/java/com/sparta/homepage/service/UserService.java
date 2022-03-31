@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.homepage.dto.KakaoUserInfoDto;
-import com.sparta.homepage.dto.SignupRequestDto;
+import com.sparta.homepage.dto.UserRequestDto;
 import com.sparta.homepage.models.User;
 import com.sparta.homepage.repository.UserRepository;
 import com.sparta.homepage.security.UserDetailsImpl;
@@ -47,7 +47,7 @@ public class UserService {
     }
     // bindingresult
 
-    public void registerUser(SignupRequestDto requestDto) {
+    public void registerUser(UserRequestDto requestDto) {
         String username = requestDto.getUsername();
         // 회원 ID 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
@@ -88,7 +88,7 @@ public class UserService {
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
                 .orElse(null);
         if (kakaoUser == null) {
-        // 회원가입
+            // 회원가입
             // username: kakao nickname
             String nickname = kakaoUserInfo.getNickname();
 

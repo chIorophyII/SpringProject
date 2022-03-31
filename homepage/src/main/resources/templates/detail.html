@@ -5,77 +5,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대나무바다</title>
+    <title>바다 위 대나무 숲</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <!--    font-family: 'Jua', sans-serif;-->
+
     <script>
         $(document).ready(function () {
-            getMessages();
+            let getLink = window.location.search;
+            let id = decodeURI(getLink.split('id=')[1])
+            getMessages(id);
         })
+        // let getLink = window.location.search;
+        // let id = decodeURI(getLink.split('id=')[1])
 
         // 게시글을 불러옵니다.
-        function getMessages() {
+        function getMessages(id) {
             $('#cards-box').empty();
+            // let idx = location.href.split("?")[1]; //localhost/detail.html?id=12
             $.ajax({
                 type: "GET",
-                url: "/api/homepage",
+                url: `/api/homepage/${id}`,
                 data: {},
                 success: function (response) {
-                    for (let i = 0; i < response.length; i++) {
-                        let post = response[i];
-                        let id = post.id;
-                        let username = post.username;
-                        let title = post.title;
-                        let contents = post.contents;
-                        let modifiedAt = post.modifiedAt;
-                        addHTML(id, username, title, contents, modifiedAt);
-                    }
+                    let post = response;
+                    let id = post.id;
+                    let name = post.name;
+                    let title = post.title;
+                    let contents = post.contents;
+                    let modifiedAt = post.modifiedAt;
+                    addHTML(id, name, title, contents, modifiedAt);
                 }
             });
         }
 
-        function addHTML(id, username, title, contents, modifiedAt) {
-            let tempHtml = makeMessage(id, username, title, contents, modifiedAt);
+
+        // 게시글 형태를 만들어줍니다.
+        function makeMessage(id, name, title, contents, modifiedAt) {
+            return `<div class="card">
+                        <div class="metadata">
+                           <div id="${id}-name" class="name">
+                               ${name}
+                           </div>
+                           <div class="date">
+                               ${modifiedAt}
+                           </div>
+                        </div>
+                    <h2 class='title' id="${id}-title">"${title}"</h2>
+                        <div class="contents" id="${id}-contents" >
+                           ${contents}
+                        </div>
+                    </div>`;
+        }
+
+        // 불러온 게시글을 html에 붙여줍니다.
+        function addHTML(id, name, title, contents, modifiedAt) {
+            let tempHtml = makeMessage(id, name, title, contents, modifiedAt);
             $('#cards-box').append(tempHtml);
         }
 
-        function makeMessage(id, username, title, contents, modifiedAt) {
-            return `<a href="/detail?id=${id}">
-                        <div class="card">
-                            <div class="metadata">
-                               <div ${id}="${id}-name" class="name">
-                                   ${username}
-                               </div>
-                               <div class="date">
-                                   ${modifiedAt}
-                               </div>
-                            </div>
-                        <h2 class='title' id="${id}-title">"${title}"</h2>
-                            <div class="contents" id="${id}-contents" >
-                               ${contents}
-                            </div>
-                            </a>
-                        </div>`;
-        }
-
-        // function signup() {
-        //   // // Get the checkbox
-        //   // var checkBox = document.getElementById("admin-check");
-        //   // // Get the output text
-        //   // var box = document.getElementById("admin-token");
-        //
-        //   // If the checkbox is checked, display the output text
-        //   // if (checkBox.checked == true){
-        //   //   box.style.display = "block";
-        //   // } else {
-        //   //   box.style.display = "none";
-        //   // }
-        //   if
-        //     location.window.href="/user/login"
-        // }
 
     </script>
 
@@ -90,14 +80,15 @@
             margin: 0px;
         }
 
+        .edit {
+            display: none;
+            pardding-left: 23px;
+        }
+
         .wrap {
             width: 538px;
             margin: 10px auto;
             height: 300px;
-        }
-
-        .to-write{
-            margin-bottom: auto;
         }
 
         .to-write button {
@@ -106,7 +97,7 @@
             font-size: 20px;
             position: relative;
             margin-left: 450px;
-            margin-top: 50px;
+            margin-top: 100px;
             margin-bottom: 50px;
             border-radius: 20px;
         }
@@ -130,10 +121,11 @@
         }
 
         .header {
-            margin-top: 70px;
+            margin-top: 0;
         }
 
         .header h2 {
+            /*font-family: 'Noto Sans KR', sans-serif;*/
             height: 33px;
             font-size: 42px;
             font-weight: 500;
@@ -143,7 +135,7 @@
             letter-spacing: -0.5px;
             text-align: center;
             color: #ffffff;
-            margin-top: 100px;
+            margin-top: 170px;
         }
 
         .header p {
@@ -159,6 +151,15 @@
             letter-spacing: -1.12px;
             text-align: center;
             color: #ffffff;
+        }
+
+        .area-write img {
+            cursor: pointer;
+            position: relative;
+            width: 22.2px;
+            height: 18.7px;
+            bottom: 50px;
+            left: 500px;
         }
 
         .card {
@@ -186,12 +187,37 @@
         }
 
         .card .metadata .date {
-
+            position: absolute;
+            right: 20px;
         }
 
-        .card .metadata .name {
-            margin-right: 50px;
+        .minicard {
+            width: 538px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
 
+        .minicard .metadata {
+            position: relative;
+            display: flex;
+            font-family: 'Spoqa Han Sans';
+            font-size: 18px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: -0.77px;
+            text-align: left;
+            color: #adb5bd;
+            height: 14px;
+            padding: 10px 23px;
+        }
+
+        .minicard .metadata .date {
+            position: absolute;
+            right: 20px;
         }
 
         .contents {
@@ -204,21 +230,15 @@
             display: none;
         }
 
-        .contents textarea.te-edit {
-            border-right: none;
-            border-top: none;
-            border-left: none;
-            resize: none;
-            border-bottom: 1px solid #212529;
-            width: 100%;
-            font-family: 'Spoqa Han Sans';
-        }
-
         #cards-box {
-            margin-top: 12px;
+            margin-top: 250px;
         }
 
         .card h2 {
+            margin-left: 30px;
+        }
+
+        .minicard h2 {
             margin-left: 30px;
         }
 
@@ -227,63 +247,50 @@
             color: #000000;
         }
 
-        #login {
+        #home {
             text-decoration: none;
             color: #FFA547;
             display: inline;
             text-align: right;
             font-size: 30px;
-            /*position: top;*/
-            /*padding-bottom: 10px;*/
-        }
-        #logout {
-            text-decoration: none;
-            color: #FFA547;
-            display: inline;
-            text-align: right;
-            font-size: 30px;
+            position: absolute;
         }
     </style>
+
 </head>
 
 <body>
 <div class="background-header">
+
 </div>
 <div class="background-body">
 
 </div>
 <div class="wrap">
     <div class="header">
-        <a sec:authorize="!isAuthenticated()" id="login" href="/user/login">로그인/회원가입</a>
-        <a sec:authorize="isAuthenticated()" id="logout" href="/user/logout">로그아웃</a>
+        <a href="/" id="home">Home</a>
         <h2>대나무 바다에서<br><br>
-            맘껏 외치세요 <span sec:authorize="isAuthenticated()" th:text="${username}+님+'!'"></span>
+            맘껏 외치세요
         </h2>
     </div>
-    <div class="to-write">
-        <button sec:authorize="isAuthenticated()" type="button" class="btn btn-primary" onclick="window.location.href='/write'"><b>글 쓰 기</b></button>
-    </div>
-    <div id="cards-box" class="area-read">
-<!--        <div class="card">-->
-<!--            <div class="metadata">-->
-<!--                <div class="date">-->
-<!--                    October 10, 2020-->
-<!--                </div>-->
-<!--                <div class="name">-->
-<!--                    anonymous-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <h2>asd</h2>-->
-<!--            <div class="contents">-->
-<!--                <div id="1-contents" class="text">-->
-<!--                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew-->
-<!--                </div>-->
-<!--                <div id="1-editarea" class="edit">-->
-<!--                    <textarea id="1-textarea" class="te-edit" name="" cols="30" rows="5"></textarea>-->
-<!--                </div>-->
-<!--            </div>-->
 
-<!--        </div>-->
+    <div id="cards-box" class="area-read">
+
+    </div>
+    <div>
+        asdf
+        <div class="minicard">
+            <div class="metadata">
+                <div id="${id}-name" class="name">
+                    <span sec:authorize="isAuthenticated()" th:text="${username}"></span>
+                </div>
+<!--                <div class="date">-->
+<!--                    수정일자-->
+<!--                </div>-->
+            </div>
+            <h2 class='text' id="${id}-title"><input></h2>
+
+        </div>
     </div>
 </div>
 </body>

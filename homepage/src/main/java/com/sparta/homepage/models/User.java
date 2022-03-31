@@ -1,10 +1,12 @@
 package com.sparta.homepage.models;
 
+import com.sparta.homepage.dto.UserRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -31,6 +33,9 @@ public class User {
 
     @Column(nullable = true, unique = true)
     private Long kakaoId;
+
+//    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+//    private List<Comments> comments;
 
     public User(String username, String email, String password) {
         this.username = username;

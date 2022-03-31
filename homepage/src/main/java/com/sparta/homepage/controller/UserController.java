@@ -1,7 +1,7 @@
 package com.sparta.homepage.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sparta.homepage.dto.SignupRequestDto;
+import com.sparta.homepage.dto.UserRequestDto;
 import com.sparta.homepage.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class UserController {
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser(@Valid SignupRequestDto requestDto, Errors errors, Model model) {
+    public String registerUser(@Valid UserRequestDto requestDto, Errors errors, Model model) {
         if (errors.hasErrors()) {
             // 회원가입 실패시 입력 데이터 유지
             model.addAttribute("userDto", requestDto);
