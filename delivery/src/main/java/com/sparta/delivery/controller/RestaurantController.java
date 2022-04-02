@@ -17,14 +17,14 @@ public class RestaurantController {
     private final RestaurantRepository restaurantRepository;
 
     // 음식점 조회
-    @GetMapping("/api/restaurant")
+    @GetMapping("/restaurants")
     public List<Restaurant> getRestaurant() {
         return restaurantRepository.findAll();
     }
 
     // 음식점 등록
-    @PostMapping("/api/restaurant/register")
-    public Restaurant createRestaurant(@RequestBody RestaurantDto requestDto) throws IllegalAccessException {
-        return restaurantService.createRestaurant(requestDto);
+    @PostMapping("/restaurant/register")
+    public Restaurant registerRestaurant(@RequestBody RestaurantDto requestDto){
+        return restaurantService.registerRestaurant(requestDto);
     }
 }

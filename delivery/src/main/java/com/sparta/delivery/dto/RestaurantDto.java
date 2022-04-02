@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class RestaurantDto {
     private String name;
-    private Long minororderprice;
-    private Long deliveryfee;
+    private Long minOrderPrice;
+    private Long deliveryFee;
 }
