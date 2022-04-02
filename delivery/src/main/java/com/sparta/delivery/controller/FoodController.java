@@ -1,14 +1,12 @@
 package com.sparta.delivery.controller;
 
-import com.sparta.delivery.dto.FoodRequestDto;
+import com.sparta.delivery.dto.FoodDto;
 import com.sparta.delivery.model.Food;
 import com.sparta.delivery.model.Restaurant;
 import com.sparta.delivery.repository.FoodRepository;
 import com.sparta.delivery.service.FoodService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,13 @@ public class FoodController {
     private final FoodRepository foodRepository;
 
     // 음식 등록
-    @PostMapping("/api/restaurant/{restaurantId}/food/register")
-    public List<Food> registerFood (@RequestBody FoodRequestDto requestDto) throws IllegalAccessException {
-        return foodService.registerFood(requestDto);
+    @PostMapping("/restaurant/{restaurantId}/food/register")
+    public void registerFood (@RequestBody List<FoodDto> foodList, @PathVariable Long restaurantId) {
+        foodService.createFood(foodList, restaurantId);
     }
+//
+//    @GetMapping("/")
+//    public List<Food> getFood(@PathVariable Long restaurantId) {
+//        return foodRepository.findAllByRestaurantId(restaurantId);
+//    }
 }

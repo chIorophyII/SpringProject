@@ -1,6 +1,6 @@
 package com.sparta.delivery.model;
 
-import com.sparta.delivery.dto.FoodRequestDto;
+import com.sparta.delivery.dto.FoodDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Food {
@@ -17,7 +18,9 @@ public class Food {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID", nullable = false)
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
+//    @Column(nullable = false)
+//    private String restaurantId;
 
     @Column(nullable = false)
     private String name;
@@ -25,9 +28,11 @@ public class Food {
     @Column(nullable = false)
     private Long price;
 
-    public Food(FoodRequestDto requestDto) {
-        this.restaurantId = requestDto.getRestaurantId();
-        this.name = requestDto.getName();
-        this.price = requestDto.getPrice();
+    public Food(FoodDto foodDto, Restaurant restaurant) {
+        this.name = foodDto.getName();
+        this.price = foodDto.getPrice();
+        this.restaurant = restaurant;
+
     }
+
 }
