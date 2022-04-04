@@ -32,7 +32,7 @@ public class FoodService {
             foodSet.add(newFood.getName());
         }
         if (foodSet.size() != foodList.size()) {
-            throw new IllegalArgumentException("중복된 음식이 존재합니다.");
+            throw new IllegalArgumentException("중복된 메뉴가 존재합니다.");
         }
 
 
@@ -41,7 +41,7 @@ public class FoodService {
 
             Optional<Food> menu = foodRepository.findByRestaurantIdAndName(restaurantId, newFood.getName());
             if (menu.isPresent()) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("이미 존재하는 메뉴입니다.");
             }
             if (newFood.getPrice() < 100 || newFood.getPrice() > 100000) {
                 throw new IllegalArgumentException("허용값을 벗어났습니다.");
@@ -52,6 +52,13 @@ public class FoodService {
 
             foodRepository.save(food);
         }
+    }
+
+    public List<Food> getMenu(Long restaurantId) {
+        restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new NullPointerException("해당 음식점이 존재하지 않습니다."));
+        return foodRepository.findByRestaurantId(restaurantId);
+    }
 
 //        public boolean validCheck(List<FoodDto> menu, FoodPlace foodPlace) {
 //            for (FoodDto newFood : menu) {
@@ -96,5 +103,6 @@ public class FoodService {
 //            if(totalPrice - deliveryFee < minOrderPrice)
 //                throw new IllegalArgumentException("최소 주문 금액 미충족");
 //        }
-    }
+
+
 }
