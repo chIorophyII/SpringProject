@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 public class Food {
@@ -32,7 +31,5 @@ public class Food {
         this.name = foodDto.getName();
         this.price = foodDto.getPrice();
         this.restaurant = restaurant;
-
     }
-
 }

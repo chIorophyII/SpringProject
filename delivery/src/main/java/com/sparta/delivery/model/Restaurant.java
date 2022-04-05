@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 //@SequenceGenerator(name = "RESTAURANT_SEQ", sequenceName = "RESTAURANT_SEQ_NO", allocationSize = 1)
