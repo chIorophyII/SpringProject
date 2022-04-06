@@ -27,10 +27,10 @@ public class Ordering {
     @Column
     private Long totalPrice;
 
-    public Ordering(String restaurantName, List<OrderMenu> foods, Long totalPrice, Long deliveryFee) {
+    public Ordering(String restaurantName, List<OrderMenu> foods, Long deliveryFee, Long totalPrice) {
         this.restaurantName = restaurantName;
         this.foods = foods;
-        this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;
+        this.totalPrice = totalPrice;
     }
 }

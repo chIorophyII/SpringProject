@@ -12,8 +12,8 @@ public class OrderResponseDto {
     private Long deliveryFee;
     private Long totalPrice;
 
-    public OrderResponseDto(Ordering ordering, List<OrderMenuResponseDto> orderMenuResponseList, Long deliveryFee, Long totalPrice) {
-        this.restaurantName = ordering.getRestaurantName();
+    public OrderResponseDto(String restaurantName, List<OrderMenuResponseDto> orderMenuResponseList, Long deliveryFee, Long totalPrice) {
+        this.restaurantName = restaurantName;
         this.foods = orderMenuResponseList;
         this.deliveryFee = deliveryFee;
         this.totalPrice = totalPrice;
