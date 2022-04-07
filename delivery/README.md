@@ -1,9 +1,9 @@
 <aside>
-✅ 과제 요구 사항
+✅ 요구 사항
 
 </aside>
 
-스프링 서버를 통해  아래 요구사항에 맞춰 배달앱 API 를 구현합니다. 크게 3개의 요구사항으로 나뉘어져 있고, 제공되는 테스트 코드가 모두 성공적으로 작동하게 되면 과제 완료입니다! 
+스프링 서버를 통해 아래 요구사항에 맞춰 배달앱 API 를 구현합니다. 크게 3개의 요구사항으로 나뉘어져 있고, 제공되는 테스트 코드가 모두 성공적으로 작동하게 되면 완료입니다! 
 
 - 테스트 코드 실행을 위해 build.gradle 파일에 아래 내용 추가
     
@@ -32,7 +32,7 @@ UI 개발 없이 백엔드 서버를 개발해야 하기 때문에, 각 API 에�
 
 </aside>
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d02b62b2-a4b1-4225-985b-06c4566263b9/Untitled.png)
+![image](https://user-images.githubusercontent.com/73023890/162229150-392fbee2-ea9d-42d1-9165-a8be6879fd59.png)
 
 1. 음식점 등록 및 조회
     - 음식점 정보 입력받아 등록
@@ -51,7 +51,10 @@ UI 개발 없이 백엔드 서버를 개발해야 하기 때문에, 각 API 에�
             2. DB 테이블 ID (id)  
             
     
-    [API 명세서](https://www.notion.so/ad685d24a945406290c8649dcfb93e99)
+    |title|API Path|Request Body Sample|Response Body Sample|
+    |------|---|---|----|
+    |음식점 등록|POST /restaurant/register|{name: "쉐이크쉑 청담점", minOrderPrice: 5000, deliveryFee: 2000}||
+    |음식점 조회|GET /restaurants||[{id:1, name:"쉐이크쉑 청담점", minOrderPrice:5000, deliveryFee:2000}]|
     
 2. 음식 등록 및 메뉴판 조회
     - 음식점 ID 및 음식 정보 입력받아 등록
@@ -69,8 +72,11 @@ UI 개발 없이 백엔드 서버를 개발해야 하기 때문에, 각 API 에�
             1. 등록 시 입력한 음식 정보 (name, price)
             2. DB 테이블 ID (id)
             
+    |title|API Path|Request Body Sample|Response Body Sample|
+    |------|---|---|---------|
+    |음식 등록|POST /restaurant/{restaurantId}/food/register|[{name: "쉑버거 더블", price: 10900}, {name: "치즈 감자튀김",price:4900},{name: "쉐이크",price: 5900}]||
+    |메뉴판 조회|GET /restaurant/{restaurantId}/foods||[{id: 1name: "쉑버거 더블",price: 10900},{id: 2name: "치즈 감자튀김",price: 4900},{id: 3name: "쉐이크",price: 5900}]|
     
-    [API 명세서](https://www.notion.so/065b1715462a4b259ecfc993da90f7c7)
     
 3. 주문 요청하기 및 주문 조회
     - 주문 요청 시 배달 음식점 및 음식 정보 입력받음
@@ -99,4 +105,7 @@ UI 개발 없이 백엔드 서버를 개발해야 하기 때문에, 각 API 에�
     - 주문 조회
         - 그동안 성공한 모든 주문 요청을 조회 가능
     
-    [API 명세서](https://www.notion.so/50187efd7a894d37849786d49bee96b0)
+    |title|API Path|Request Body Sample|Response Body Sample|
+    |------|---|---|---------|
+    |음식 등록|POST /restaurant/{restaurantId}/food/register|restaurantId: 1foods: [{ id: 1, quantity: 1 },{ id: 2, quantity: 2 },{ id: 3, quantity: 3 }]}]|{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2, price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}|
+    |메뉴판 조회|GET /restaurant/{restaurantId}/foods||[{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2,price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}]|
