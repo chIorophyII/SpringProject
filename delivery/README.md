@@ -107,5 +107,5 @@ UI 개발 없이 백엔드 서버를 개발해야 하기 때문에, 각 API 에�
     
     |title|API Path|Request Body Sample|Response Body Sample|
     |------|---|---|---------|
-    |음식 등록|POST /restaurant/{restaurantId}/food/register|restaurantId: 1foods: [{ id: 1, quantity: 1 },{ id: 2, quantity: 2 },{ id: 3, quantity: 3 }]}]|{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2, price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}|
-    |메뉴판 조회|GET /restaurant/{restaurantId}/foods||[{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2,price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}]|
+    |주문|POST /restaurant/{restaurantId}/food/register|restaurantId: 1foods: [{ id: 1, quantity: 1 },{ id: 2, quantity: 2 },{ id: 3, quantity: 3 }]}]|{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2, price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}|
+    | 조회|GET /restaurant/{restaurantId}/foods||[{restaurantName: "쉐이크쉑 청담점",foods: [{ name: "쉑버거 더블", quantity: 1, price: 10900 },{ name: "치즈 감자튀김",quantity: 2,price: 9800},{name: "쉐이크", quantity: 3,price: 17700}],deliveryFee: 2000,totalPrice: 40400}]|
